@@ -9,7 +9,6 @@ public class MainController {
 
 	@GetMapping("/")
 	public String index(Model model) {
-		model.addAttribute("message", "Hello!");
 		return "index";
 	}
 }
