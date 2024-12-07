@@ -52,7 +52,7 @@
                             <a class="nav-link click-scroll" href="#section_4">학생 후기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_5">Q&A</a>
+                            <a class="nav-link" href="/selectListBoard">Q&A</a>
                         </li>
                     </ul>
                     <div class="d-none d-lg-block">

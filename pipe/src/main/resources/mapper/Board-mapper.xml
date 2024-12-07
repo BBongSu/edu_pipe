@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pipe.mapper.BoardMapper">
+
+	<select id="selectListBoard" parameterType="map" resultType="map">
+    	SELECT *
+		FROM board
+    </select>
+
+    <select id="selectBoard" parameterType="map" resultType="map">
+    	SELECT *
+		FROM board
+		WHERE id = #{id}
+    </select>
+
+    <delete id="deleteBoard" parameterType="map">
+    	DELETE FROM board WHERE id = #{id}
+    </delete>
+
+    <update id="updateBoard" parameterType="map">
+    	UPDATE board
+    	SET
+			title = '게시글 제목 11111111'
+    	WHERE id = #{id}
+    </update>
+
+    <insert id="insertBoard" parameterType="map">
+    	INSERT INTO board(
+    		title,
+    		writer,
+    		content
+    	)
+    	VALUES(
+    		#{title},
+    		#{writer},
+    		#{content}
+    	)
+    </insert>
+</mapper>
