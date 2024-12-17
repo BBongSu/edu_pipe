@@ -1,5 +1,6 @@
 package com.pipe.mapper;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,14 +9,14 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BoardMapper {
 
-	List<Map<String, Object>> selectListBoard(Map<String, Object> map);
+	List<LinkedHashMap<String,Object>> boardList(Map<String, Object> map);
 
-	void deleteBoard(Map<String, Object> map);
+	Map<String, Object> boardSelect(Map<String, Object> map);
 
-	void updateBoard(Map<String, Object> map);
+	int boardInsert(Map<String, Object> map);
 
-	void insertBoard(Map<String, Object> map);
+	int boardUpdate(Map<String, Object> map);
 
-	Map<String, Object> selectBoard(Map<String, Object> map);
+	int boardDelete(Map<String, Object> map);
 
 }

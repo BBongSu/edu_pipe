@@ -2,29 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pipe.mapper.BoardMapper">
 
-	<select id="selectListBoard" parameterType="map" resultType="map">
-    	SELECT *
+	<select id="boardList" parameterType="map" resultType="java.util.LinkedHashMap">
+    	SELECT
+    		title AS '제목',
+    		content AS '내용',
+    		writer AS '작성자',
+    		DATE_FORMAT(regdt,'%Y-%m-%d') AS '작성일'
 		FROM board
     </select>
 
-    <select id="selectBoard" parameterType="map" resultType="map">
+    <select id="boardSelect" parameterType="map" resultType="map">
     	SELECT *
 		FROM board
 		WHERE id = #{id}
     </select>
 
-    <delete id="deleteBoard" parameterType="map">
-    	DELETE FROM board WHERE id = #{id}
-    </delete>
-
-    <update id="updateBoard" parameterType="map">
-    	UPDATE board
-    	SET
-			title = '게시글 제목 11111111'
-    	WHERE id = #{id}
-    </update>
-
-    <insert id="insertBoard" parameterType="map">
+	<insert id="boardInsert" parameterType="map">
     	INSERT INTO board(
     		title,
     		writer,
@@ -36,4 +29,16 @@
     		#{content}
     	)
     </insert>
+
+    <update id="boardUpdate" parameterType="map">
+    	UPDATE board
+    	SET
+			title = #{title}
+    	WHERE id = #{id}
+    </update>
+
+    <delete id="boardDelete" parameterType="map">
+    	DELETE FROM board WHERE id = #{id}
+    </delete>
+
 </mapper>

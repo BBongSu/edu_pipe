@@ -1,82 +1,61 @@
 package com.pipe.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pipe.service.BoardService;
 
-import jakarta.servlet.http.HttpServletRequest;
-
-@Controller
+@RestController
+@RequestMapping("/board")
 public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
 
-	@GetMapping("/selectListBoard")
-	public String selectListBoard(Map<String,Object> map, Model model){
+	@PostMapping("/list")
+	public List<LinkedHashMap<String,Object>> boardList(@RequestBody Map<String,Object> map){
 
-		List<Map<String,Object>> selectListBoard = boardService.selectListBoard(map);
+		List<LinkedHashMap<String,Object>> boardList = boardService.boardList(map);
 
-		model.addAttribute("selectListBoard",selectListBoard);
-
-		return "/board";
+		return boardList;
 	}
 
-	@GetMapping("/selectBoard")
-	public String selectBoard(HttpServletRequest request, Map<String,Object> map, Model model){
+	@PostMapping("/select")
+	public Map<String,Object> boardSelect(@RequestBody Map<String,Object> map){
 
-		String id = request.getParameter("id");
+		Map<String,Object> boardSelect = boardService.boardSelect(map);
 
-		map.put("id", id);
-
-		Map<String,Object> selectBoard = boardService.selectBoard(map);
-
-		model.addAttribute("selectBoard",selectBoard);
-
-		return "/boardDetail";
+		return boardSelect;
 	}
 
-	@GetMapping("/deleteBoard")
-	public void deleteBoard(HttpServletRequest request, Map<String,Object> map) {
+	@PostMapping("/insert")
+	public int boardInsert(@RequestBody Map<String,Object> map) {
 
-		String id = request.getParameter("id");
+		int boardInsert = boardService.boardInsert(map);
 
-		map.put("id", id);
-
-		boardService.deleteBoard(map);
+		return boardInsert;
 	}
 
-	@GetMapping("/updateBoard")
-	public void updateBoard(HttpServletRequest request, Map<String,Object> map) {
+	@PostMapping("/update")
+	public int boardUpdate(@RequestBody Map<String,Object> map) {
 
-		String id = request.getParameter("id");
+		int boardUpdate = boardService.boardUpdate(map);
 
-		map.put("id", id);
-
-		boardService.updateBoard(map);
+		return boardUpdate;
 	}
 
-	@PostMapping("/insertBoard")
-	public String insertBoard(@RequestParam Map<String,Object> map) {
+	@PostMapping("/delete")
+	public int boardDelete(@RequestBody Map<String,Object> map) {
 
-		boardService.insertBoard(map);
+		int boardDelete = boardService.boardDelete(map);
 
-		return "redirect:/board";
+		return boardDelete;
 	}
-
-	@GetMapping("/boardView")
-	public String boardView(HttpServletRequest request, Map<String,Object> map) {
-		return "/boardView";
-	}
-
-
 }

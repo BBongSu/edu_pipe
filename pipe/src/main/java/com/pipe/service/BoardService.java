@@ -1,5 +1,6 @@
 package com.pipe.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,24 +17,23 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 
-	public List<Map<String, Object>> selectListBoard(Map<String, Object> map) {
-		return boardMapper.selectListBoard(map);
+	public List<LinkedHashMap<String,Object>> boardList(Map<String, Object> map) {
+		return boardMapper.boardList(map);
 	}
 
-	public void deleteBoard(Map<String, Object> map) {
-		boardMapper.deleteBoard(map);
+	public Map<String, Object> boardSelect(Map<String, Object> map) {
+		return boardMapper.boardSelect(map);
 	}
 
-	public void updateBoard(Map<String, Object> map) {
-		boardMapper.updateBoard(map);
+	public int boardInsert(Map<String, Object> map) {
+		return boardMapper.boardInsert(map);
 	}
 
-	public void insertBoard(Map<String, Object> map) {
-		boardMapper.insertBoard(map);
+	public int boardUpdate(Map<String, Object> map) {
+		return boardMapper.boardUpdate(map);
 	}
 
-	public Map<String, Object> selectBoard(Map<String, Object> map) {
-		return boardMapper.selectBoard(map);
+	public int boardDelete(Map<String, Object> map) {
+		return boardMapper.boardDelete(map);
 	}
-
 }
