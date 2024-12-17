@@ -13,9 +13,6 @@ function listData(url,params) {
 	        listForm(result);
 	    },
 	    error: function (xhr,status,error) {
-			console.error("에러 상태 코드:", xhr.status);
-			console.error("에러 메시지:", xhr.responseText);
-			console.error("상세 에러:", error);
 			alert("목록 정보 조회 실패. 다시 시도해 주세요.");
 	    }
 	});
@@ -24,7 +21,6 @@ function listData(url,params) {
 function listForm(result) {
 
 	// 기존 데이터 초기화
-	$("thead").empty();
 	$("tbody").empty();
 
 	// 데이터가 없을 경우
@@ -32,24 +28,36 @@ function listForm(result) {
 		$("tbody").append('<tr><td colspan="100%" class="text-center">게시글이 없습니다.</td></tr>');
 		return;
 	}
-
-	// 1. 테이블 헤더 동적 생성
+	// 목록 데이터
 	const keys = Object.keys(result[0]);
-	let headerRow = '<tr><th>번호</th>';
-	keys.forEach(key => {
-		headerRow += '<th>'+key+'</th>';
-	});
-	headerRow += '</tr>';
-	$("thead").append(headerRow);
+	// 제외할 키 목록
+	const excludeKeys = ['id']; // 여기에 제외할 키를 추가
 
-	// 2. 테이블 본문 동적 생성
+	// 1. 테이블 본문 동적 생성
 	result.forEach((item, index) => {
-		let row = '<tr><td>'+(index+1)+'</td>';
-		keys.forEach(key => {
-			row += '<td>'+(item[key] !== undefined ? item[key] : '')+'</td>';
-		});
-		row += '</tr>';
-		$("tbody").append(row);
+
+	    // keys 배열에서 제외할 키들을 필터링
+	    const filteredKeys = keys.filter(key => !excludeKeys.includes(key));
+	    let row = '<tr class="clickable-row" data-id="'+(item.id ? item.id : '')+'"><td>'+(index+1)+'</td>';
+
+	    // 제외된 키를 제외하고 출력
+	    filteredKeys.forEach(key => {
+	        row += '<td>'+(item[key] !== undefined ? item[key] : '')+'</td>';
+	    });
+
+	    row += '</tr>';
+	    $("tbody").append(row);
+	});
+
+	// 2. 클릭 이벤트 추가
+	$("tbody").on("click", ".clickable-row", function () {
+		const id = $(this).data("id");
+		if (id) {
+			$("#detailId").val(id);
+			$("#detailForm").submit();
+		} else {
+			alert("잘못된 데이터입니다.");
+		}
 	});
 }
 
@@ -77,10 +85,10 @@ function selectForm(result) {
 	        element.prop('checked', data[key]);
 	    } else if (element.is('select')) {
 	        // 셀렉트박스 처리
-	        element.val(data[key]);
+	        element.val(result[key]);
 	    } else {
 	        // 기본 input, textarea 처리
-	        element.val(data[key]);
+	        element.val(result[key]);
 	    }
 	}
 }
@@ -93,7 +101,8 @@ function insertData(url,params) {
 		contentType: 'application/json',
 		data: JSON.stringify(params),
 		success: function (result) {
-
+			alert("정보 추가 성공. 목록으로 이동합니다.");
+			location.href="/page?pageName="+params.pageName;
 		},
 		error: function () {
 			alert("정보 추가 실패. 다시 시도해 주세요.");
@@ -109,7 +118,10 @@ function updateData(url,params) {
 		contentType: 'application/json',
 		data: JSON.stringify(params),
 		success: function (result) {
-
+			if(result != -1){
+				alert("정보 수정 성공. 목록으로 이동합니다.");
+				location.href="/page?pageName="+params.pageName;
+			}
 		},
 		error: function () {
 			alert("정보 수정 실패. 다시 시도해 주세요.");
@@ -117,7 +129,7 @@ function updateData(url,params) {
 	});
 }
 
-function deleteTable(url,params) {
+function deleteData(url,params) {
 	$.ajax({
 		url: url,
 		type: 'post',
@@ -125,7 +137,10 @@ function deleteTable(url,params) {
 		contentType: 'application/json',
 		data: JSON.stringify(params),
 		success: function (result) {
-
+			if(result != -1){
+				alert("정보 삭제 성공. 목록으로 이동합니다.");
+				location.href="/page?pageName="+params.pageName;
+			}
 		},
 		error: function () {
 			alert("정보 삭제 실패. 다시 시도해 주세요.");

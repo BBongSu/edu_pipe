@@ -4,15 +4,21 @@
 
 	<select id="boardList" parameterType="map" resultType="java.util.LinkedHashMap">
     	SELECT
-    		title AS '제목',
-    		content AS '내용',
-    		writer AS '작성자',
-    		DATE_FORMAT(regdt,'%Y-%m-%d') AS '작성일'
+    		id,
+    		title,
+    		content,
+    		writer,
+    		DATE_FORMAT(regdt,'%Y-%m-%d') AS regdt
 		FROM board
     </select>
 
     <select id="boardSelect" parameterType="map" resultType="map">
-    	SELECT *
+    	SELECT
+    		id,
+    		title,
+    		content,
+    		writer,
+    		regdt
 		FROM board
 		WHERE id = #{id}
     </select>
@@ -33,7 +39,10 @@
     <update id="boardUpdate" parameterType="map">
     	UPDATE board
     	SET
-			title = #{title}
+			title = #{title},
+			writer = #{writer},
+			content = #{content},
+			upddt = NOW()
     	WHERE id = #{id}
     </update>
 

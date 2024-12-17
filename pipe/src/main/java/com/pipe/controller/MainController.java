@@ -18,7 +18,7 @@ public class MainController {
     @GetMapping("/page")
     public String dynamicPage(@RequestParam("pageName") String pageName, Model model) {
         model.addAttribute("title", "송유선");
-        model.addAttribute("contentPath", "/WEB-INF/views/" + pageName + "/" + pageName + "List.jsp");
+        model.addAttribute("contentPath", "/WEB-INF/views/" + pageName.split("_")[0] + "/" + pageName + ".jsp");
         return "common/layout";
     }
 }
