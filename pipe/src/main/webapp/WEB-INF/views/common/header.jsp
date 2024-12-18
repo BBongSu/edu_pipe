@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg" style="background-color: rgba(0, 0, 0, 0.85);">
 	<div class="container">
 		<a class="navbar-brand" href="/">
 			<i class="navbar-brand-icon bi-book me-2"></i>
