@@ -3,8 +3,6 @@ package com.pipe.controller;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +14,11 @@ import com.pipe.service.BoardService;
 @RequestMapping("/board")
 public class BoardController {
 
-	@Autowired
-	private BoardService boardService;
+	private final BoardService boardService;
+
+	public BoardController(BoardService boardService) {
+		this.boardService = boardService;
+	}
 
 	@PostMapping("/list")
 	public List<LinkedHashMap<String,Object>> boardList(@RequestBody Map<String,Object> map){

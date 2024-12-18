@@ -2,23 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pipe.mapper.BoardMapper">
 
+	<sql id="boardColumn">
+		id,
+   		title,
+   		content,
+   		writer,
+   		DATE_FORMAT(regdt,'%Y-%m-%d') AS regdt
+	</sql>
+
 	<select id="boardList" parameterType="map" resultType="java.util.LinkedHashMap">
     	SELECT
-    		id,
-    		title,
-    		content,
-    		writer,
-    		DATE_FORMAT(regdt,'%Y-%m-%d') AS regdt
+    		<include refid="boardColumn"/>
 		FROM board
     </select>
 
     <select id="boardSelect" parameterType="map" resultType="map">
     	SELECT
-    		id,
-    		title,
-    		content,
-    		writer,
-    		regdt
+    		<include refid="boardColumn"/>
 		FROM board
 		WHERE id = #{id}
     </select>

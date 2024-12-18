@@ -3,8 +3,6 @@ package com.pipe.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +12,11 @@ import com.pipe.mapper.BoardMapper;
 @Transactional
 public class BoardService {
 
-	@Autowired
-	private BoardMapper boardMapper;
+	private final BoardMapper boardMapper;
+
+	public BoardService(BoardMapper boardMapper) {
+		this.boardMapper = boardMapper;
+	}
 
 	public List<LinkedHashMap<String,Object>> boardList(Map<String, Object> map) {
 		return boardMapper.boardList(map);
